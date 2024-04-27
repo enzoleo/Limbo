@@ -757,7 +757,6 @@ int snetwire(defrCallbackType_e c, defiNet* ppath, defiUserData ud)
 
 int snetf(defrCallbackType_e c, defiNet* net, defiUserData ud)
 {
-    defDB->add_def_snet(*net);
     // For net and special net.
     int         i, j, x, y, z, count, newLayer;
     char*       layerName;
@@ -1789,18 +1788,41 @@ int cls(defrCallbackType_e c, void* cl, defiUserData ud)
             break;
         case defrTrackCbkType :
             track = (defiTrack*)cl;
-            defDB->add_def_track(*track);
-
+            // Disable track info printing currently.
+#if 0
+            if (track->firstTrackMask())
+            {
+                if (track->sameMask())
+                {
+                    limboPrint(limbo::kNONE, "TRACKS %s %g DO %g STEP %g MASK %d SAMEMASK LAYER ",
+                               track->macro(), track->x(),
+                               track->xNum(), track->xStep(),
+                               track->firstTrackMask());
+                } else
+                {
+                    limboPrint(limbo::kNONE, "TRACKS %s %g DO %g STEP %g MASK %d LAYER ",
+                               track->macro(), track->x(),
+                               track->xNum(), track->xStep(),
+                               track->firstTrackMask());
+                }
+            } else
+            {
+                limboPrint(limbo::kNONE, "TRACKS %s %g DO %g STEP %g LAYER ",
+                           track->macro(), track->x(),
+                           track->xNum(), track->xStep());
+            }
+            for (i = 0; i < track->numLayers(); i++)
+                limboPrint(limbo::kNONE, "%s ", track->layer(i));
+            limboPrint(limbo::kNONE, ";\n"); 
+#endif
             break;
         case defrGcellGridCbkType :
             gcg = (defiGcellGrid*)cl;
-
-            defDriver->gcellgrid().gcellgrid_name = gcg->macro();
-            defDriver->gcellgrid().start = gcg->x();
-            defDriver->gcellgrid().step = gcg->xStep();
-            defDriver->gcellgrid().num = gcg->xNum();
-            defDB->add_def_gcellgrid(defDriver->gcellgrid());
-            
+            // Disable gcell grid info printing currently.
+#if 0
+            limboPrint(limbo::kNONE, "GCELLGRID %s %d DO %d STEP %g ;\n",
+                       gcg->macro(), gcg->x(), gcg->xNum(), gcg->xStep());
+#endif
             break;
         case defrViaCbkType :
             via = (defiVia*)cl;
@@ -1809,7 +1831,6 @@ int cls(defrCallbackType_e c, void* cl, defiUserData ud)
                 via->print(stdout);
             } else
             {
-                defDB->add_def_via(*via);
                 limboPrint(limbo::kNONE, "- %s ", via->name());
                 if (via->hasPattern())
                     limboPrint(limbo::kNONE, "+ PATTERNNAME %s ", via->pattern());
@@ -2275,8 +2296,7 @@ int cls(defrCallbackType_e c, void* cl, defiUserData ud)
                     vBbox[i][2] = block->xh(i); 
                     vBbox[i][3] = block->yh(i); 
                 } 
-                string layername(block->layerName());
-                defDB->add_def_route_blockage(vBbox, layername);
+                defDB->add_def_placement_blockage(vBbox);
             }
             else if (block->hasPlacement()) {
                 std::vector<std::vector<int> > vBbox (block->numRectangles(), std::vector<int>(4)); 
@@ -2525,9 +2545,9 @@ bool Driver::parse_file(const std::string &filename)
         defrSetTechnologyCbk(technologyName);
         defrSetExtensionCbk(extension);
         defrSetDesignEndCbk(done);
-        //defrSetPropDefStartCbk(propstart);
-        //defrSetPropCbk(prop);
-        //defrSetPropDefEndCbk(propend);
+        // defrSetPropDefStartCbk(propstart);
+        // defrSetPropCbk(prop);
+        // defrSetPropDefEndCbk(propend);
         /* Test for CCR 766289*/
         if (!noNetCb)
             defrSetNetCbk(netf);
@@ -2535,7 +2555,7 @@ bool Driver::parse_file(const std::string &filename)
         defrSetNetNonDefaultRuleCbk(nondefRulef);
         defrSetNetSubnetNameCbk(subnetNamef);
         defrSetNetPartialPathCbk(netpath);
-        defrSetSNetCbk(snetf);
+        // defrSetSNetCbk(snetf);
         // defrSetSNetPartialPathCbk(snetpath);
         // if (setSNetWireCbk)
         //     defrSetSNetWireCbk(snetwire);

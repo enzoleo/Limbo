@@ -474,18 +474,11 @@ class DefDataBase
         /// @brief add pin 
 		virtual void add_def_pin(Pin const&) = 0;
         /// @brief set number of pins 
-		virtual void resize_def_pin(int)  = 0;
+		virtual void resize_def_pin(int) = 0;
         /// @brief add net 
 		virtual void add_def_net(Net const&) = 0;
         /// @brief set number of nets 
 		virtual void resize_def_net(int) = 0;
-        ///
-        virtual void add_def_track(defiTrack const&);
-        virtual void add_def_gcellgrid(GCellGrid const&);
-        virtual void add_def_snet(defiNet const&);
-        virtual void add_def_via(defiVia const&);
-        /// @brief add placement blockages, array of boxes with xl, yl, xh, yh
-        virtual void add_def_route_blockage(std::vector<std::vector<int> > const&, std::string const&);
         // check these callbacks at runtime 
         /// @brief set number of blockages 
         virtual void resize_def_blockage(int);
