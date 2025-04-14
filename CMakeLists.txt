@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7.0)
+cmake_minimum_required(VERSION 3.18)
 
 project(Limbo)
 
@@ -120,7 +120,7 @@ find_package(Threads REQUIRED)
 find_package(BISON 3.3 REQUIRED)
 find_package(FLEX REQUIRED)
 find_package(ZLIB REQUIRED)
-find_package(Boost 1.55.0 REQUIRED COMPONENTS graph regex)
+find_package(Boost 1.55.0 CONFIG REQUIRED COMPONENTS graph regex)
 if(ALGORITHMS OR SOLVERS)
 find_package(GUROBI)
 find_package(CPLEX)
