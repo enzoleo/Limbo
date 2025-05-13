@@ -4,20 +4,19 @@ project(Limbo)
 
 set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}" CACHE PATH "Prefix prepended to install directories")
 
-if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, Debug|Release" FORCE)
-endif(NOT CMAKE_BUILD_TYPE)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, Debug|Release" FORCE)
+endif()
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
 # deal with GCC dual ABI issue 
 if(NOT CMAKE_CXX_ABI)
-    set(CMAKE_CXX_ABI 0 CACHE STRING
-        "Choose the value for _GLIBCXX_USE_CXX11_ABI, options are: 0|1."
-        FORCE)
-endif(NOT CMAKE_CXX_ABI)
+  set(CMAKE_CXX_ABI 0 CACHE STRING
+    "Choose the value for _GLIBCXX_USE_CXX11_ABI, options are: 0|1."
+    FORCE)
+endif()
 message(STATUS "CMAKE_CXX_ABI: _GLIBCXX_USE_CXX11_ABI=${CMAKE_CXX_ABI}")
 add_definitions(-D_GLIBCXX_USE_CXX11_ABI=${CMAKE_CXX_ABI})
-
 
 # packages like Csdp and SDPColoringCsdp are dependent to OPENBLAS
 option(OPENBLAS "Choose to enable OpenBLAS or not, ON|OFF" OFF)
@@ -122,20 +121,28 @@ find_package(FLEX REQUIRED)
 find_package(ZLIB REQUIRED)
 find_package(Boost 1.55.0 CONFIG REQUIRED COMPONENTS graph regex)
 if(ALGORITHMS OR SOLVERS)
-find_package(GUROBI)
-find_package(CPLEX)
-find_package(LPSOLVE)
-endif(ALGORITHMS OR SOLVERS)
+  find_package(GUROBI)
+  find_package(CPLEX)
+  find_package(LPSOLVE)
+endif()
 
+if(APPLE)
+  if(FLEX_FOUND)
+    get_filename_component(FLEX_BINARY_DIR "${FLEX_EXECUTABLE}" DIRECTORY)
+    get_filename_component(FLEX_PREFIX "${FLEX_BINARY_DIR}" DIRECTORY)
+    find_path(FLEX_INCLUDE_DIRS FlexLexer.h PATHS "${FLEX_PREFIX}/include")
+    find_library(FLEX_LIBRARIES fl PATHS "${FLEX_PREFIX}/lib")
+  endif()
+endif()
 
 add_subdirectory(limbo)
-if (ENABLE_TEST)
-    add_subdirectory(test)
-endif (ENABLE_TEST)
+if(ENABLE_TEST)
+  add_subdirectory(test)
+endif()
 
-if (GENERATE_DOCS)
-    find_package(Doxygen)
-    if (DOXYGEN_FOUND)
-        add_subdirectory(docs)
-    endif(DOXYGEN_FOUND)
-endif(GENERATE_DOCS)
+if(GENERATE_DOCS)
+  find_package(Doxygen)
+  if(DOXYGEN_FOUND)
+    add_subdirectory(docs)
+  endif()
+endif()
