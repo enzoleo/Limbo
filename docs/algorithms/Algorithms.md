@@ -78,7 +78,6 @@ Possible dependencies:
 [Cbc](https://projects.coin-or.org/Cbc), 
 [Lemon](https://lemon.cs.elte.hu), 
 [Csdp](@ref ThirdParty), 
-[OpenBLAS](@ref ThirdParty). 
 
 - [test/algorithms/test_FM.cpp](@ref test_FM.cpp)
 - [test/algorithms/test_ChromaticNumber.cpp](@ref test_ChromaticNumber.cpp)

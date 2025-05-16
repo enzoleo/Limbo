@@ -87,8 +87,6 @@ Some components depend on external libraries, such as
 
 Users need to make sure they are properly installed and the corresponding settings are configured. 
 
-## 1. Default installation
-
 * In the directory of limbo library, run 
 ~~~~~~~~~~~~~~~~
 mkdir build
@@ -98,17 +96,7 @@ make
 make install 
 ~~~~~~~~~~~~~~~~
 
-After installation, it is strongly recommended to export LIMBO_DIR to the path where Limbo library is installed as an environment variable. 
-
-## 2. Customize OPENBLAS options 
-
-* There is a third party OpenBLAS required by some other third party packages, such as Csdp. OPENBLAS option is used to control whether compiling these packages. 
-
-If you do not need these packages, set -DOPENBLAS=0 (default); 
-otherwise, set -DOPENBLAS=1.
-The default version of OpenBLAS is not very stable for cross platforms, which often results in compiling errors. 
-OpenBLAS is integrated as a submodule which fetch source code from remote repository. 
-If you already have OpenBLAS in the directory, simply run "git submodule update" to fetch the latest version in the submodule directory. 
+After installation, it is strongly recommended to export LIMBO_DIR to the path where Limbo library is installed as an environment variable.
 
 # FAQ 
 
@@ -158,8 +146,6 @@ The software is released under MIT license except third party packages. Please s
 Third party package **c-thread-pool** is released under MIT license. 
 
 Third party package **csdp** is released under CPL v1.0 license. 
-
-Third party package **OpenBLAS** has its copyright reserved; please check its license. 
 
 # Tutorial 
 

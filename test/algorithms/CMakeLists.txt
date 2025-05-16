@@ -45,17 +45,6 @@ if(INSTALL_LIMBO)
     install(TARGETS test_FM DESTINATION test/algorithms)
 endif(INSTALL_LIMBO)
 
-if(OPENBLAS)
-    add_executable(test_SDPColoring test_SDPColoring.cpp)
-    target_link_libraries(test_SDPColoring LINK_PUBLIC ${LIBS} sdp openblas m ${CMAKE_THREAD_LIBS_INIT} gfortran)
-    if(COMPILE_DEFINITIONS)
-        target_compile_definitions(test_SDPColoring PRIVATE ${COMPILE_DEFINITIONS})
-    endif(COMPILE_DEFINITIONS)
-    if(INSTALL_LIMBO)
-        install(TARGETS test_SDPColoring DESTINATION test/algorithms)
-    endif(INSTALL_LIMBO)
-endif(OPENBLAS)
-
 if(GUROBI_FOUND)
     include_directories(
         ${GUROBI_INCLUDE_DIRS}

@@ -9,10 +9,6 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 message(STATUS "CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
 
-# packages like Csdp and SDPColoringCsdp are dependent to OPENBLAS
-option(OPENBLAS "Choose to enable OpenBLAS or not, ON|OFF" OFF)
-message(STATUS "OPENBLAS: ${OPENBLAS}")
-
 # whether install the library or not 
 option(INSTALL_LIMBO "Whether install ${PROJECT_NAME} or not, ON|OFF" ON)
 message(STATUS "INSTALL_LIMBO: ${INSTALL_LIMBO}")
