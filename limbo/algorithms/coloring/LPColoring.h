@@ -405,7 +405,7 @@ void LPColoring<GraphType>::set_optimize_model(vector<GRBVar>& vColorBits, vecto
         uint32_t bitIdxT = t<<1;
 
         edge_weight_type w = this->edge_weight(e);
-        limboAssertMsg(w > 0, "no stitch edge allowed, positive edge weight expected: " << w);
+        limboAssertMsg(w > 0, "no stitch edge allowed, positive edge weight expected: %u", w);
 
         sprintf(buf, "R%u", m_constrs_num++);  
         optModel.addConstr(

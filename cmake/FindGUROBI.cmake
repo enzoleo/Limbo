@@ -3,8 +3,8 @@
 
 # - Try to find GUROBI
 # Once done this will define
-#  GUROBI_FOUND - System has Gurobi
-#  GUROBI_INCLUDE_DIRS - The Gurobi include directories
+#  GUROBI_FOUND - System has GUROBI
+#  GUROBI_INCLUDE_DIRS - The GUROBI include directories
 #  GUROBI_LIBRARIES - The libraries needed to use Gurobi
 
 set(GUROBI_FOUND FALSE)
@@ -19,10 +19,14 @@ else (GUROBI_INCLUDE_DIR)
         NAMES gurobi_c++.h
         PATHS "$ENV{GUROBI_HOME}/include"
         )
+    
+    message(STATUS "GUROBI_INCLUDE_DIR: ${GUROBI_INCLUDE_DIR}")
+    message(STATUS "GUROBI_HOME: ${GUROBI_HOME}")
+    message(STATUS "GUROBI_VERSION: ${GUROBI_VERSION}")
 
-    # hints of names from version 40 to 99
+    # hints of names from version 40 to 110
     set(GUROBI_NAME_HINTS "")
-    foreach(GUROBI_VERSION RANGE 40 99)
+    foreach(GUROBI_VERSION RANGE 40 110)
         list(APPEND GUROBI_NAME_HINTS "gurobi${GUROBI_VERSION}")
         list(APPEND GUROBI_NAME_HINTS "gurobi${GUROBI_VERSION}_light")
     endforeach()
@@ -91,3 +95,4 @@ else (GUROBI_INCLUDE_DIR)
       GUROBI_LIBRARY GUROBI_CXX_LIBRARY GUROBI_INCLUDE_DIR)
 
 endif(GUROBI_INCLUDE_DIR)
+message(STATUS "GUROBI_LIBRARIES: ${GUROBI_LIBRARIES}")
